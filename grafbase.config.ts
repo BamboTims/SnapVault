@@ -2,8 +2,12 @@ import { graph, auth, config, connector } from "@grafbase/sdk";
 
 const g = graph.Standalone();
 
+const DATABASE_URL = process.env.DATABASE_URL;
+
+if (!DATABASE_URL) throw new Error("Database Url is not set");
+
 const pg = connector.Postgres("Postgres", {
-  url: g.env(process.env.DATABASE_URL),
+  url: g.env(DATABASE_URL),
 });
 
 g.datasource(pg);
